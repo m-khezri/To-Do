@@ -1,7 +1,22 @@
 import './navbar.scss';
 import $ from 'jquery';
-// import firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
+
+const logoutEvent = () => {
+  $('.nav-link').on('click', (e) => {
+    if (e.target.id === 'navbar-button-logout') {
+      firebase.auth().signOut().then(() => {
+        $('#input-todo').prop('disabled', true);
+        $('#navbar-button-logout').hide();
+        $('#google-auth').show();
+      }).catch((err) => {
+        console.log('You are stil logged in', err);
+      });
+    }
+  });
+};
+
 
 const createNavbar = () => {
   const domString = `<nav class="myNavbar navbar navbar-expand-lg navbar-dark bg-dark">
@@ -21,7 +36,9 @@ const createNavbar = () => {
     </ul>
   </div>
 </nav>`;
+
   $('#navBar-container').html(domString);
+  logoutEvent();
 };
 
 export default createNavbar;
