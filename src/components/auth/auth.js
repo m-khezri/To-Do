@@ -14,6 +14,9 @@ const logInbutton = () => {
   $('#google-auth').on('click', () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
+    $('#google-auth').hide();
+    $('#navbar-button-logout').show();
+    $('#input-todo').prop('disabled', false);
   });
 };
 
