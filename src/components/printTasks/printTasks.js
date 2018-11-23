@@ -1,17 +1,29 @@
 import $ from 'jquery';
-// import apiKeys from '../../../db/apiKeys';
-import tasksData from '../../helpers/tasksData';
-import 'bootstrap';
+import taskData from '../../helpers/tasksData';
 
-const writeTasks = (todo) => {
-  let newString = '';
-  todo.forEach((tasks) => {
-    newString += `
-        <div class="mr-2 p-2 border shadow-sm rounded flex-item">
-        <h6 class="text-secondary">${tasks.task}</h6>
-        </div>`;
-    $('#tasks-board').html(newString);
+const loadTasks = (todoArray) => {
+
+  let domString = '';
+  todoArray.forEach((todo) => {
+    domString += `
+          <div>
+                <p>${todo.task}</p>
+          </div>
+      `;
+    $('#tasks-board').html(domString);
   });
 };
 
-export default writeTasks;
+const listTasks = () = {
+  tasksData.getAllTasks()
+    .then((todoArray) => {
+      printTasks(todoArray);
+    })
+    .catch((error) => {
+      console.error('error in getting tasks', error);
+    });
+};
+
+
+
+export default listTasks;

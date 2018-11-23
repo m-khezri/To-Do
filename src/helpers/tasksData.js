@@ -1,39 +1,25 @@
 import axios from 'axios';
-import apiKeys from '../../db/apiKeys';
+import apiKeys from '../../../db/apiKeys.json';
 
-const baseUrl = apiKeys.firebaseKeys.databaseURL;
+const firebaseUrl = apiKeys.firebaseKeys.databaseURL;
 
-const loadTasks = () => new Promise((resolve, reject) => {
-  axios
-    .get(`${baseUrl}/todo.json`)
-    .then((result) => {
-      const taskObject = result.data;
-      const taskArray = [];
-      if (taskObject != null) {
-        Object.keys(taskObject).forEach((taskId) => {
-          const newTask = taskObject[taskId];
-          newTask.id = taskId;
-          taskArray.push(newTask);
+const getAllTasks = () => new Promise((resolve, reject) => {
+  axios.get(`${firebaseUrl}/tasks.json`)
+    .then((results) => {
+      const tasksObject = results.data;
+      const tasksArray = [];
+      if (tasksObject !== null) {
+        Object.keys(tasksObject).forEach((taskId) => {
+          tasksObject[taskId].id = taskId;
+          tasksArray.push(tasksObject[taskId]);
         });
       }
-      resolve(taskArray);
-    }).catch((err) => {
-      reject(err);
+      resolve(tasksArray);
+    })
+    .catch((error) => {
+      reject(error);
     });
 });
 
-const getTasks = () => {
-  loadTasks().then((data) => {
-    writeTasks(data);
-  }).catch((error) => {
-    console.error(error);
-  });
-};
 
-
-const bindWriteTasks = () => {
-  loadTasks();
-  getTasks();
-};
-
-export default bindWriteTasks;
+export default getAllTasks;
