@@ -1,17 +1,18 @@
 import axios from 'axios';
-import apiKeys from '../../../db/apiKeys.json';
+import apiKeys from '../../db/apiKeys';
 
 const firebaseUrl = apiKeys.firebaseKeys.databaseURL;
 
 const getAllTasks = () => new Promise((resolve, reject) => {
-  axios.get(`${firebaseUrl}/tasks.json`)
+  axios.get(`${firebaseUrl}/todo.json`)
     .then((results) => {
       const tasksObject = results.data;
       const tasksArray = [];
-      if (tasksObject !== null) {
+      if (tasksObject != null) {
         Object.keys(tasksObject).forEach((taskId) => {
-          tasksObject[taskId].id = taskId;
-          tasksArray.push(tasksObject[taskId]);
+          const newTask = tasksObject[taskId];
+          newTask.id = taskId;
+          tasksArray.push(newTask);
         });
       }
       resolve(tasksArray);

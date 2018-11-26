@@ -1,29 +1,25 @@
 import $ from 'jquery';
 import taskData from '../../helpers/tasksData';
 
-const loadTasks = (todoArray) => {
-
+const listTasks = (tasks) => {
   let domString = '';
-  todoArray.forEach((todo) => {
+  tasks.forEach((todo) => {
     domString += `
           <div>
                 <p>${todo.task}</p>
-          </div>
-      `;
-    $('#tasks-board').html(domString);
+          </div>`;
+  });
+  $('#tasks-board').html(domString);
+};
+
+
+const getTasks = () => {
+  taskData().then((data) => {
+    listTasks(data);
+  }).catch((error) => {
+    console.error(error);
   });
 };
 
-const listTasks = () = {
-  tasksData.getAllTasks()
-    .then((todoArray) => {
-      printTasks(todoArray);
-    })
-    .catch((error) => {
-      console.error('error in getting tasks', error);
-    });
-};
 
-
-
-export default listTasks;
+export default getTasks;
