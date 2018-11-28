@@ -8,10 +8,12 @@ const checkLoginStatus = () => {
       $('#navbar-button-logout').show();
       $('#input-todo').prop('disabled', false);
       $('#google-auth').hide();
+      $('#tasks-board').show();
     } else {
       $('#navbar-button-logout').hide();
       $('#input-todo').prop('disabled', true);
       $('#google-auth').show();
+      $('#tasks-board').hide();
     }
   });
 };
