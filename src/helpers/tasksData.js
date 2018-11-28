@@ -4,7 +4,7 @@ import apiKeys from '../../db/apiKeys';
 const firebaseUrl = apiKeys.firebaseKeys.databaseURL;
 
 const getAllTasks = () => new Promise((resolve, reject) => {
-  axios.get(`${firebaseUrl}/todo.json`)
+  axios.get(`${firebaseUrl}/tasks.json`)
     .then((results) => {
       const tasksObject = results.data;
       const tasksArray = [];
